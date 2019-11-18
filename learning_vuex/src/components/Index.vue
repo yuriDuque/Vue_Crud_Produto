@@ -47,12 +47,10 @@ export default {
     },
 
     edit(p){
-      debugger;
       this.produto = p;
     },
 
     deletar(id){
-      debugger;
       var deletado = this.data.filter(produto => produto.id != id);
       this.data = deletado;
       this.produto = null;

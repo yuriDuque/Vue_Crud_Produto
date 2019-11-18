@@ -41,7 +41,6 @@ export default {
     this.$store.watch(
       () => this.$store.getters.getProdutoSelected,
       n => {
-        console.log("watched: ", n);
         this.produto = n;
         this.valor = this.produto.valor;
       }
