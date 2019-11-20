@@ -1,25 +1,25 @@
 <template>
   <form @submit="submit" @reset="reset">
-  <div class="form-row">
-    <div class="form-group col-6">
-      <label class="font-weight-bold">Nome</label>
-      <input type="text" class="form-control" v-model="produto.nome" @change="validarCampos" />
-    </div>
-    <div class="form-group col-6">
-      <label class="font-weight-bold">Valor</label>
-      <input type="text" class="form-control" v-model="valor" @change="validarCampos" />
-    </div>
-    <div class="align-self-end col-12">
-      <button type="reset" class="btn btn-danger float-left">
-        <font-awesome-icon icon="window-close" class="mr-1" />CANCELAR
-      </button>
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label class="font-weight-bold">Nome</label>
+        <input type="text" class="form-control" v-model="produto.nome" @change="validarCampos" />
+      </div>
+      <div class="form-group col-6">
+        <label class="font-weight-bold">Valor</label>
+        <input type="text" class="form-control" v-model="valor" @change="validarCampos" />
+      </div>
+      <div class="align-self-end col-12">
+        <button type="reset" class="btn btn-danger float-left font-weight-bold">
+          <font-awesome-icon icon="window-close" class="mr-1" />CANCELAR
+        </button>
 
-      <button type="submit" class="btn btn-success float-right">
-        <font-awesome-icon icon="save" class="mr-1" />
-        {{TextSave}}
-      </button>
+        <button type="submit" class="btn btn-success float-right font-weight-bold">
+          <font-awesome-icon icon="save" class="mr-1" />
+          {{TextSave}}
+        </button>
+      </div>
     </div>
-  </div>
   </form>
 </template>
 
@@ -59,7 +59,6 @@ export default {
     submit(e) {
       e.preventDefault();
       if (this.saveActive) {
-
         this.produto.valor = this.valor;
 
         if (!this.produto.id) {
