@@ -1,5 +1,7 @@
 # learning_vuex
 
+View Demo: https://yuriduque.github.io/LearningVue/
+
 ## Project setup
 ```
 npm install
