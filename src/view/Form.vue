@@ -1,11 +1,11 @@
 <template>
   <form @submit="submit" @reset="reset">
     <div class="form-row">
-      <div class="form-group col-6">
+      <div class="form-group col-6" id="nome">
         <label class="font-weight-bold">Nome</label>
         <input type="text" class="form-control" v-model="produto.nome" @change="validarCampos" />
       </div>
-      <div class="form-group col-6">
+      <div class="form-group col-6" id="valor">
         <label class="font-weight-bold">Valor</label>
         <input type="text" class="form-control" v-model="valor" @change="validarCampos" />
       </div>
@@ -129,5 +129,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@media screen and (max-width: 750px) {
+  #nome {
+    max-width: 100% !important;
+    flex: 0 0 100%;
+  }
+
+  #valor {
+    max-width: 100% !important;
+    flex: 0 0 100%;
+  }
+}
 </style>

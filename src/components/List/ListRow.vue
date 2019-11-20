@@ -24,5 +24,7 @@ export default {
 <style>
 th {
   font-weight: normal;
+  border-top: 0px solid #dee2e6 !important;
+  border-bottom: 0px solid #dee2e6 !important;
 }
 </style>
