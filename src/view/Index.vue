@@ -51,37 +51,6 @@ export default {
       }
     );
   },
-
-  methods: {
-    submit(p) {
-      if (p.id == null) {
-        var id = 1;
-        this.data.forEach(element => {
-          if (element.id >= id) {
-            id = element.id + 1;
-          }
-        });
-
-        p.id = id;
-        this.data.push(p);
-      } else {
-        var index = this.data.findIndex(produto => produto.id == p.id);
-        this.data[index] = p;
-      }
-
-      this.produto = null;
-    },
-
-    edit(p) {
-      this.produto = p;
-    },
-
-    deletar(id) {
-      var deletado = this.data.filter(produto => produto.id != id);
-      this.data = deletado;
-      this.produto = null;
-    }
-  }
 };
 </script>
 

@@ -10,6 +10,9 @@ import { faUserSecret, faSave, faWindowClose, faEdit, faTrashAlt} from '@fortawe
 
 import store from './store';
 
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
 library.add(faUserSecret, faSave, faWindowClose, faEdit, faTrashAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

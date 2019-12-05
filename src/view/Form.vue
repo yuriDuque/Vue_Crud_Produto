@@ -1,13 +1,20 @@
 <template>
-  <form @submit="submit" @reset="reset">
+  <form @submit.prevent="submit" @reset="reset">
     <div class="form-row">
       <div class="form-group col-6" id="nome">
         <label class="font-weight-bold">Nome</label>
         <input type="text" class="form-control" v-model="produto.nome" @change="validarCampos" />
       </div>
       <div class="form-group col-6" id="valor">
-        <label class="font-weight-bold">Valor</label>
-        <input type="text" class="form-control" v-model="valor" @change="validarCampos" />
+        <label class="font-weight-bold" :class="{'label-error':!$v.valor.required}">Valor</label>
+        <input
+          type="text"
+          class="form-control"
+          :class="{'border-error':!$v.valor.required}"
+          v-model.trim="$v.valor.$model"
+          @change="validarCampos"
+        />
+        <div class="label-error message font-weight-bold" v-if="!$v.valor.required">O valor é obrigatório.</div>
       </div>
       <div class="align-self-end col-12">
         <button type="reset" class="btn btn-danger float-left font-weight-bold">
@@ -24,6 +31,8 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "Form",
 
@@ -35,6 +44,16 @@ export default {
 
       saveActive: false
     };
+  },
+
+  validations() {
+    if (!this.valor && this.valor !== "R$ 0") {
+      return {
+        valor: {
+          required
+        }
+      };
+    }
   },
 
   mounted() {
@@ -49,6 +68,7 @@ export default {
 
   watch: {
     valor() {
+      console.log(this.$v);
       if (this.valor) {
         this.valor = this.number_format(this.valor);
       }
@@ -56,19 +76,31 @@ export default {
   },
 
   methods: {
-    submit(e) {
-      e.preventDefault();
-      if (this.saveActive) {
-        this.produto.valor = this.valor;
+    submit() {
+      debugger;
 
-        if (!this.produto.id) {
-          this.$store.commit("increment", this.produto);
-        } else {
-          this.$store.commit("edit", this.produto);
-        }
-
-        this.reset();
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        // do your submit logic here
+        this.submitStatus = "PENDING";
+        setTimeout(() => {
+          this.submitStatus = "OK";
+        }, 500);
       }
+
+      // if (this.saveActive) {
+      //   this.produto.valor = this.valor;
+
+      //   if (!this.produto.id) {
+      //     this.$store.commit("increment", this.produto);
+      //   } else {
+      //     this.$store.commit("edit", this.produto);
+      //   }
+
+      //   this.reset();
+      // }
     },
 
     reset() {
@@ -130,6 +162,26 @@ export default {
 </script>
 
 <style>
+label {
+  margin-bottom: 0px !important;
+}
+
+.message{
+  font-size: 13px !important;
+}
+
+.label-error {
+  color: rgb(234, 84, 85);
+}
+
+.border-error {
+  border-color: rgb(234, 84, 85,0.25) !important;
+}
+
+.border-error:focus{
+  box-shadow: 0 0 0 0.1rem rgba(234, 84, 85,.25) !important;
+}
+
 @media screen and (max-width: 750px) {
   #nome {
     max-width: 100% !important;
