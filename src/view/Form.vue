@@ -68,7 +68,6 @@ export default {
 
   watch: {
     valor() {
-      console.log(this.$v);
       if (this.valor) {
         this.valor = this.number_format(this.valor);
       }
@@ -77,8 +76,6 @@ export default {
 
   methods: {
     submit() {
-      debugger;
-
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
@@ -175,7 +172,7 @@ label {
 }
 
 .border-error {
-  border-color: rgb(234, 84, 85,0.25) !important;
+  border-color: rgb(234, 84, 85, 0.25) !important;
 }
 
 .border-error:focus{
