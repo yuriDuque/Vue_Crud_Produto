@@ -1,6 +1,6 @@
 # learning_vuex
 
-View Demo: https://yuriduque.github.io/LearningVue/
+View Demo: https://duckcodecrudproduto.netlify.com/
 
 ## Project setup
 ```
