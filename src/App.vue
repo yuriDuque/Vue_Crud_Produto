@@ -8,6 +8,9 @@
       <a href="https://vuex.vuejs.org/">
         <img alt="Vuex logo" src="./assets/vuexlogo.png" class="ml-3" style="width: 65px" />
       </a>
+      <a href="https://vuelidate.js.org/#getting-started">
+        <img alt="Vuex logo" src="./assets/vue_validate.svg" class="ml-3" style="width: 65px" />
+      </a>
       <a href="https://getbootstrap.com.br/docs/4.1/getting-started/introduction/">
         <img
           alt="Bootstrap logo"
