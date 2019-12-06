@@ -105,7 +105,6 @@ export default {
 
   watch: {
     valor() {
-      debugger;
       if (this.valor) {
         this.valor = this.number_format(this.valor);
       }
