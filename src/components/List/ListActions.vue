@@ -19,11 +19,11 @@ export default {
 
   methods: {
     edit() {
-      this.$store.commit("produtoSelected", this.id);
+      this.$emit("emit_select", this.id);
     },
 
     deletar() {
-      this.$store.commit("decrement", this.id);
+      this.$emit("emit_delete", this.id);
     }
   }
 };

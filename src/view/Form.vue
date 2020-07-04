@@ -1,7 +1,6 @@
 <template>
   <form @submit.prevent="submit" @reset="reset">
     <div class="form-row">
-
       <!-- Nome -->
       <div class="form-group col-6" id="nome">
         <label
@@ -63,8 +62,16 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 
+import axios from "axios";
+import config from "../../config.js";
+const apiUrl = config.apiUrl + "/produto";
+
 export default {
   name: "Form",
+
+  props: {
+    selected_id: null
+  },
 
   validations() {
     return {
@@ -84,29 +91,40 @@ export default {
       valor: null,
       nome: null,
       TextSave: "SALVAR",
-      produto: this.$store.getters.getProdutoSelected,
+      // produto: this.$store.getters.getProdutoSelected,
 
       formStatus: false
     };
   },
 
-  mounted() {
-    this.$store.watch(
-      () => this.$store.getters.getProdutoSelected,
-      produto => {
-        this.id = produto.id;
-        this.nome = produto.nome;
-        this.valor = produto.valor;
-
-        this.formStatus = false;
-      }
-    );
-  },
+  mounted() {},
 
   watch: {
     valor() {
       if (this.valor) {
         this.valor = this.number_format(this.valor);
+      }
+    },
+
+    selected_id() {
+      if (this.selected_id) {
+        axios
+          .get(`${apiUrl}/${this.selected_id}`)
+          .then(response => {
+            this.id = response.data.id;
+            this.nome = response.data.name;
+            
+            var valor = response.data.price + "";
+
+            if (valor.indexOf(".") == valor.length - 2) {
+              valor += "0";
+            }
+
+            this.valor = valor;
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
     }
   },
@@ -116,18 +134,11 @@ export default {
       this.formStatus = true;
       this.$v.$touch();
       if (!this.$v.$invalid) {
-
         this.produto = {
           id: this.id,
           nome: this.nome,
           valor: this.valor
-        } 
-
-        if (!this.id) {
-          this.$store.commit("increment", this.produto);
-        } else {
-          this.$store.commit("edit", this.produto);
-        }
+        };
 
         this.reset();
       }
@@ -140,6 +151,7 @@ export default {
     },
 
     number_format(value) {
+      debugger;
       value = value + "";
       value = this.mascara_numero(value);
 
@@ -168,7 +180,7 @@ export default {
       }
 
       return text;
-    },
+    }
   }
 };
 </script>

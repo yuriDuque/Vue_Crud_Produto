@@ -1,7 +1,7 @@
 <template>
   <tr>
     <th :key="index" v-for="(item, index) in Object.values(object)">{{item}}</th>
-    <ListActions :id="object.id" />
+    <ListActions :id="object.id" @emit_select="emit_select($event)" @emit_delete="emit_delete($event)"/>
   </tr>
 </template>
 
@@ -17,6 +17,16 @@ export default {
 
   props: {
     object: null
+  },
+
+  methods: {
+    emit_select(id){
+      this.$emit("emit_select", id);
+    },
+
+    emit_delete(id){
+      this.$emit("emit_delete", id);
+    }
   }
 };
 </script>
