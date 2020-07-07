@@ -63,7 +63,6 @@ export default {
         this.dados = response.data;
 
         this.dados.forEach(element => {
-
           var valor = element.price + "";
           if (valor.indexOf(".") == valor.length - 2) {
             valor += "0";
@@ -87,7 +86,6 @@ export default {
     },
 
     number_format(value) {
-       debugger;
       value = value + "";
       value = this.mascara_numero(value);
 

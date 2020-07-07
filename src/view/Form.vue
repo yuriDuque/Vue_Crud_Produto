@@ -38,19 +38,11 @@
       </div>
 
       <div class="align-self-end col-12">
-        <button
-          type="reset"
-          @click="formStatus=false"
-          class="btn btn-danger float-left font-weight-bold"
-        >
+        <button type="reset" class="btn btn-danger float-left font-weight-bold">
           <font-awesome-icon icon="window-close" class="mr-1" />CANCELAR
         </button>
 
-        <button
-          type="submit"
-          @click="formStatus=true"
-          class="btn btn-success float-right font-weight-bold"
-        >
+        <button type="submit" class="btn btn-success float-right font-weight-bold">
           <font-awesome-icon icon="save" class="mr-1" />
           {{TextSave}}
         </button>
@@ -113,7 +105,7 @@ export default {
           .then(response => {
             this.id = response.data.id;
             this.nome = response.data.name;
-            
+
             var valor = response.data.price + "";
 
             if (valor.indexOf(".") == valor.length - 2) {
@@ -131,27 +123,72 @@ export default {
 
   methods: {
     submit() {
+      debugger;
+
       this.formStatus = true;
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.produto = {
-          id: this.id,
+          id: !this.id ? 0 : this.id,
           nome: this.nome,
           valor: this.valor
         };
 
-        this.reset();
+        if (!this.id) {
+          this.save(this.produto);
+        } else {
+          this.update(this.produto);
+        }
       }
+    },
+
+    save(produto) {
+      this.call()
+        .post(apiUrl, produto, {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(() => {
+          alert("Produto cadastrado com sucesso! ");
+
+          this.reset();
+        })
+        .catch(e => {
+          alert("Erro ao cadastrar produto! " + e);
+        });
+    },
+
+    update(produto) {
+      this.call()
+        .put(`${apiUrl}`, produto, {
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(() => {
+          alert("Produto atualizado com sucesso!");
+
+          this.reset();
+        })
+        .catch(e => {
+          alert("Erro ao atualizar produto!" + e);
+        });
     },
 
     reset() {
       this.$store.commit("resetProduto");
       this.TextSave = "SALVAR";
       this.formStatus = false;
+      this.produto = null;
+    },
+
+    call() {
+      axios.create({
+        baseURL: "https://localhost:44375/api/produto",
+        timeout: 1000
+      });
+
+      return axios;
     },
 
     number_format(value) {
-      debugger;
       value = value + "";
       value = this.mascara_numero(value);
 
